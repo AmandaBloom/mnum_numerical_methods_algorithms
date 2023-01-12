@@ -59,6 +59,7 @@ end
 X1=x(:,1);
 X2=x(:,2);
 T=t;
+
 end
 
 function dxdt = zad1_func(t,x)

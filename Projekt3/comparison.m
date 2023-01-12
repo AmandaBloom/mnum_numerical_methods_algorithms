@@ -1,4 +1,4 @@
-function [] = comparison(dx1,dx2,xs1,xs2,h0,b)
+function [] = comparison(xs1,xs2,h0,b)
 %
 %   AUTOR
 %       Tomasz Pawlak, 304104
@@ -15,11 +15,10 @@ function [] = comparison(dx1,dx2,xs1,xs2,h0,b)
 %       b       -   koniec obserwowanego przedziału <0, b>  
 %
 %   PRZYKŁADOWE WYWOŁANIE
-%       >> comparison(@(x1,x2)x2+x1*(0.3-(x1)^2-(x2)^2),@(x1,x2)-x1+x2*(0.3-(x1)^2-(x2)^2),0.001,-0.02,0.01,20)
+%       >> comparison(0.001,-0.02,0.01,20)
 %
-[ttr, X1r, X2r, Tr, err, hh] = rk4z(dx1,dx2,xs1,xs2,h0,b);
+[ttr, X1r, X2r, Tr, err, hh] = rk4z(xs1,xs2,h0,b);
 [tto, X1o, X2o, To] = ode(xs1,xs2,b);
-
     plot(Tr,X1r,To,X1o);
     title('Porównanie Trajektori x1(t)');
     xlabel('Czas t');
@@ -58,8 +57,8 @@ function [] = comparison(dx1,dx2,xs1,xs2,h0,b)
     xlabel('Czas t [s]');
     ylabel('Epsilon');
     w=waitforbuttonpress;
+    clearAllMemoizedCaches;
     clf;
+    clear all;
     close all;
-    return
-
 end
