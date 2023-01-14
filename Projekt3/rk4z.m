@@ -8,7 +8,6 @@ function [tt, X1, X2, T, err, hh] = rk4z(xs1,xs2,h0,b)
 %       współrzędnych wykorzystując 
 %
 %   PARAMETRY WEJŚCIOWE
-%       dx1,dx2 -   równania różniczkowe opisujące ruch
 %       xs1,xs2 -   współrzędne startowe układu (x1,x2)
 %       h0      -   krok początkowy
 %       b       -   koniec obserwowanego przedziału <0, b>
@@ -21,7 +20,7 @@ function [tt, X1, X2, T, err, hh] = rk4z(xs1,xs2,h0,b)
 %   PRZYKŁADOWE WYWOŁANIE
 %       >> [ttr,X1,X2,T,err,hh]=rk4z(0.001,-0.02,0.01,20)
 %
-PRINT=false;
+PRINT=true;
 tic;
 
 % Funkcje układu równań różniczkowych
@@ -32,7 +31,7 @@ dx2 = @(x1,x2)-x1+x2*(0.3-(x1)^2-(x2)^2);
 % minimlanego kroku
 h=h0;
 hh=h;
-s = 0.3;
+s = 0.9;
 beta_ = 5;
 E_n = 1e-4;
 E_b = 1e-8;
@@ -106,17 +105,18 @@ while t+h ~= b
         X2=[X2; x2];
         
         T=[T; t];
+
         % Obliczanie błędów na podstawie kroku
-        
         delta1=(1/15)*abs(x1h-x1);
         delta2=(1/15)*abs(x2h-x2);
         epse1=abs(x1h)*E_n + E_b;
         epse2=abs(x2h)*E_n + E_b;
         
-        err=[err; max([err; epse1; epse2])];
         
         alfa=min(epse1/delta1, epse2/delta2);
         alfa=alfa^(1/5);
+
+        err=[err; max([err; epse1; epse2])];
 
         % Ustalenie nowej wartości kroku dla kolejnej pętli
         h_new = s*alfa*h;

@@ -22,7 +22,7 @@ function [tt, X1, X2, T] = ode(xs1,xs2,b)
 %
 
 % Czy chcemy wygenerować wykresy z tego pliku
-PRINT=false;
+PRINT=true;
 
 tic;
 % Przedział czasu
